@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>动态输入框及正确率统计示例</title>
+    <style>
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .label-before,
+        .label-after,
+        .user-input,
+        .correct-text,
+        .accuracy {
+            font-size: 20px; /* 增加字号 */
+        }
+        .label-before {
+            margin-right: 5px;
+        }
+        .label-after {
+            margin-left: 5px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .correct-text {
+            display: block; /* 使正确文本独占一行 */
+            margin-top: 5px; /* 减少与上一行的间隙 */
+        }
+        .accuracy {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    var inputCount = 0; // 用于跟踪输入框的数量
+    var correctCount = 0; // 用于跟踪正确输入的次数
+
+    function createInputWithLabels() {
+        inputCount++; // 增加输入框计数
+
+        // 创建输入框
+        var inputElement = document.createElement('input');
+        inputElement.type = 'text';
+        inputElement.className = 'user-input';
+
+        // 创建前标签
+        var labelBefore = document.createElement('label');
+        labelBefore.className = 'label-before';
+        labelBefore.textContent = inputCount + '. ';
+
+        // 创建后标签
+        var labelAfter = document.createElement('label');
+        labelAfter.className = 'label-after';
+        labelAfter.textContent = ' 后标签';
+
+        // 创建容器并添加标签和输入框
+        var container = document.createElement('div');
+        container.className = 'input-group';
+        container.appendChild(labelBefore);
+        container.appendChild(inputElement);
+        container.appendChild(labelAfter);
+
+        // 添加到页面中
+        document.body.appendChild(container);
+
+        // 设置输入框的事件监听器
+        inputElement.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                var userText = inputElement.value;
+                var givenText = "example"; // 给定的文本
+
+                // 检查输入是否正确
+                if (userText === givenText) {
+                    inputElement.classList.add('correct');
+                    correctCount++; // 增加正确次数
+                } else {
+                    inputElement.classList.add('incorrect');
+                    // 显示正确的文本，并在前面添加换行
+                    var correctText = document.createElement('span');
+                    correctText.className = 'correct-text';
+                    correctText.textContent = '正确文本: ' + givenText;
+                    container.appendChild(correctText);
+                }
+
+                // 禁用当前输入框
+                inputElement.disabled = true;
+
+                // 检查是否达到五次输入
+                if (inputCount === 5) {
+                    showAccuracy(); // 显示正确率
+                } else {
+                    createInputWithLabels(); // 创建新的输入框
+                }
+            }
+        });
+
+        // 聚焦新输入框
+        inputElement.focus();
+    }
+
+    function showAccuracy() {
+        var accuracy = (correctCount / 5) * 100; // 计算正确率
+        var accuracyText = document.createElement('div');
+        accuracyText.className = 'accuracy';
+        accuracyText.textContent = '正确率: ' + accuracy.toFixed(2) + '%';
+        document.body.appendChild(accuracyText);
+    }
+
+    // 初始化第一个输入框
+    createInputWithLabels();
+</script>
+
+</body>
+</html>

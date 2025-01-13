@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read Integer from File</title>
+</head>
+<body>
+
+<div id="result">Loading...</div>
+
+<script>
+    async function readFile() {
+        try {
+            const response = await fetch('inputdata.txt'); // 假设文件名为inputdata.txt
+            const data = await response.text();
+            const lines = data.split('\n'); // 分割文件内容为多行
+
+            // 读取第一行，分割字符串和数字
+            const [firstString, n] = lines[0].split(' ');
+            const numberOfStrings = parseInt(n, 10); // 将数字字符串转换为整数
+
+            // 读取接下来的n行
+            const strings = lines.slice(1, 1 + numberOfStrings);
+
+            // 处理第一行的字符串和接下来的n行字符串
+            // 这里只是将它们显示在页面上，你可以根据需要做其他处理
+            const result = `First String: ${firstString}<br>Number of Strings:${numberOfStrings}<br>Strings:<br>${strings.join('<br>')}`;
+
+            // 将处理后的结果显示在页面上
+            document.getElementById('result').innerHTML = result;
+
+        } catch (error) {
+            console.error('Error reading the file:', error);
+        }
+    }
+
+    // 调用函数以读取文件并处理字符串
+    readFile();
+</script>
+
+</body>
+</html>

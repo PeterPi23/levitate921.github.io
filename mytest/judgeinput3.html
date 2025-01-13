@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文本比较示例</title>
+    <style>
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+    <script>
+        function compareText(event) {
+            // 检查是否按下了回车键
+            if (event.keyCode === 13) {
+                var userText = document.getElementById('userText').value;
+                var givenText = "Arcana Eden"; // 给定的文本
+                var resultElement = document.getElementById('result');
+                var correctTextElement = document.getElementById('correctText');
+
+                if (userText === givenText) {
+                    resultElement.className = 'correct';
+                    correctTextElement.style.display = 'none'; // 隐藏正确文本
+                } else {
+                    resultElement.className = 'incorrect';
+                    correctTextElement.style.display = 'block'; // 显示正确文本
+                    correctTextElement.innerText = '正确的文本是：' + givenText;
+                }
+                resultElement.innerText = userText; // 显示用户输入的文本
+            }
+        }
+    </script>
+</head>
+<body>
+    <label for="userText">BYD 11.6</label>
+    <input type="text" id="userText" name="userText" onkeyup="compareText(event)">
+    <p id="result" class=""></p> <!-- 用户输入的文本将在这里显示 -->
+    <p id="correctText" style="display: none;"></p> <!-- 正确的文本将在这里显示 -->
+</body>
+</html>

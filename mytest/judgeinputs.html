@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>动态输入框颜色提示示例</title>
+    <style>
+        .input-container {
+            margin-bottom: 10px;
+        }
+        .label-before {
+            margin-right: 5px;
+        }
+        .label-after {
+            margin-left: 5px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .correct-text {
+            color: green;
+        }
+    </style>
+    <script>
+        function createNewLabel(text, className) {
+            var label = document.createElement('label');
+            label.className = className;
+            label.innerText = text;
+            return label;
+        }
+
+        function compareText(event) {
+            if (event.keyCode === 13) {
+                var inputElement = event.target;
+                var userText = inputElement.value;
+                var givenText = "Arcana Eden"; // 给定的文本
+                var resultElement = document.createElement('span');
+
+                // 设置结果文本的样式
+                if (userText === givenText) {
+                    resultElement.className = 'correct';
+                    resultElement.innerText = userText; // 显示用户输入的文本
+                } else {
+                    resultElement.className = 'incorrect';
+                    resultElement.innerText = userText; // 显示用户输入的文本
+                    // 显示正确的文本
+                    var correctTextElement = document.createElement('span');
+                    correctTextElement.className = 'correct-text';
+                    correctTextElement.innerText = ' (正确输出: ' + givenText + ')';
+                    resultElement.appendChild(correctTextElement);
+                }
+
+                // 创建新的输入框和标签
+                var newInputElement = document.createElement('input');
+                newInputElement.type = 'text';
+                newInputElement.onkeyup = compareText;
+
+                var labelBefore = createNewLabel('1.', 'label-before');
+                var labelAfter = createNewLabel('BYD 11.6', 'label-after');
+
+                // 插入结果和新输入框及标签
+                var container = inputElement.parentNode;
+                container.appendChild(document.createElement('br')); // 换行
+                container.appendChild(resultElement);
+                container.appendChild(document.createElement('br')); // 换行
+                container.appendChild(labelBefore);
+                container.appendChild(newInputElement);
+                container.appendChild(labelAfter);
+
+                // 清空并禁用当前输入框
+                inputElement.disabled = true;
+
+                // 聚焦新输入框
+                newInputElement.focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="inputContainer" class="input-container">
+        <label class="label-before">1. </label>
+        <input type="text" onkeyup="compareText(event)">
+        <label class="label-after"> BYD 11.6</label>
+    </div>
+</body>
+</html>

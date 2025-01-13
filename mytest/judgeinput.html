@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文本比较示例</title>
+    <script>
+        function compareText() {
+            var userText = document.getElementById('userText').value;
+            var givenText = "example"; // 给定的文本
+            if (userText === givenText) {
+                document.getElementById('result').innerText = '输入的文本与给定的文本相同！';
+            } else {
+                document.getElementById('result').innerText = '输入的文本与给定的文本不同！';
+            }
+        }
+    </script>
+</head>
+<body>
+    <label for="userText">请输入文本：</label>
+    <input type="text" id="userText" name="userText">
+    <button onclick="compareText()">比较文本</button>
+    <p id="result"></p>
+</body>
+</html>
